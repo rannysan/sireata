@@ -1,9 +1,12 @@
 package br.edu.utfpr.dv.sireata.view;
 
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
+@SpringBootApplication
 public class MainView extends BasicView {
 	
 	public static final String NAME = "home";

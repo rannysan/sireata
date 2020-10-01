@@ -18,13 +18,19 @@ import br.edu.utfpr.dv.sireata.model.Ata;
 import br.edu.utfpr.dv.sireata.model.Ata.TipoAta;
 import br.edu.utfpr.dv.sireata.util.DateUtils;
 
-@Path("/ata")
+import java.util.concurrent.atomic.AtomicLong;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+@Controller
 public class AtaService {
-	
-	@GET
-	@Path("/listar/{orgao}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response listar(@PathParam("orgao") int idOrgao) {
+
+	@GetMapping("/listar/{orgao}")
+	@ResponseBody
+	public Response listar(@RequestParam("orgao") int idOrgao) {
 		try {
 			List<Ata> list = new AtaBO().listarPorOrgao(idOrgao);
 			List<AtaJson> ret = new ArrayList<AtaJson>();
@@ -47,11 +53,10 @@ public class AtaService {
 			return Response.status(Status.INTERNAL_SERVER_ERROR.ordinal(), e.getMessage()).build();
 		}
 	}
-	
-	@GET
-	@Path("/visualizar/{orgao}/{tipo}/{numero}/{ano}")
-	@Produces("application/pdf")
-	public Response baixar(@PathParam("orgao") int idOrgao, @PathParam("tipo") int tipo, @PathParam("numero") int numero, @PathParam("ano") int ano) {
+
+	@GetMapping("/visualizar/{orgao}/{tipo}/{numero}/{ano}")
+	@ResponseBody
+	public Response baixar(@RequestParam("orgao") int idOrgao, @RequestParam("tipo") int tipo, @RequestParam("numero") int numero, @RequestParam("ano") int ano) {
 		try {
 			Ata ata = new AtaBO().buscarPorNumero(idOrgao, TipoAta.valueOf(tipo), numero, ano);
 			

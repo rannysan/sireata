@@ -15,14 +15,18 @@ import javax.ws.rs.core.Response.Status;
 
 import br.edu.utfpr.dv.sireata.bo.OrgaoBO;
 import br.edu.utfpr.dv.sireata.model.Orgao;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Path("/orgao")
+@Controller
 public class OrgaoService {
-	
-	@GET
-	@Path("/listar/{departamento}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response listar(@PathParam("departamento") int idDepartamento) {
+
+	@GetMapping("/listar/{departamento}")
+	@ResponseBody
+	public Response listar(@RequestParam("departamento") int idDepartamento) {
 		try {
 			List<Orgao> list = new OrgaoBO().listarPorDepartamento(idDepartamento);
 			List<OrgaoJson> ret = new ArrayList<OrgaoJson>();

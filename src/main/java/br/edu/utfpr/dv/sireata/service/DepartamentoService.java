@@ -15,14 +15,18 @@ import javax.ws.rs.core.Response.Status;
 
 import br.edu.utfpr.dv.sireata.bo.DepartamentoBO;
 import br.edu.utfpr.dv.sireata.model.Departamento;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Path("/departamento")
+@Controller
 public class DepartamentoService {
-	
-	@GET
-	@Path("/listar/{campus}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response listar(@PathParam("campus") int idCampus) {
+
+	@GetMapping("/listar/{campus}")
+	@ResponseBody
+	public Response listar(@RequestParam("campus") int idCampus) {
 		try {
 			List<Departamento> list = new DepartamentoBO().listarPorCampus(idCampus, true);
 			List<DepartamentoJson> ret = new ArrayList<DepartamentoJson>();

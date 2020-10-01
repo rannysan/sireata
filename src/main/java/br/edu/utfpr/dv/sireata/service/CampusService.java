@@ -14,13 +14,16 @@ import javax.ws.rs.core.Response.Status;
 
 import br.edu.utfpr.dv.sireata.bo.CampusBO;
 import br.edu.utfpr.dv.sireata.model.Campus;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Path("/campus")
+@Controller
 public class CampusService {
 
-	@GET
-	@Path("/listar")
-	@Produces(MediaType.APPLICATION_JSON)
+	@GetMapping("/listar")
+	@ResponseBody
 	public Response listar() {
 		try {
 			List<Campus> list = new CampusBO().listarTodos(true);
